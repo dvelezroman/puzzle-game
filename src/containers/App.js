@@ -5,8 +5,8 @@ import { Board } from '../components/Board';
 
 const Container = styled.div`
 	flex: 1;
-	padding-left: 20;
-	padding-right: 20;
+	padding-left: 20px;
+	padding-right: 20px;
 	justify-content: center;
 `;
 
@@ -16,27 +16,46 @@ const Header = styled.div`
 	align-items: center;
 `;
 
-const SubHeader = styled.div`
-	flex: 1;
-	margin-top: 20;
-	margin-bottom: 20;
-	text-align: right;
-	font-family: Arial, Helvetica, sans-serif;
-`;
-
 const Title = styled.p`
 	width: 100%;
 	text-align: center;
-	font-size: 30;
+	font-size: 36px;
 	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
 `;
 
 const Button = styled.button`
-	background-color: blue;
-	padding: 10;
-	font-size: 16;
+	display: block;
+	padding: 10px 20px;
+	text-align: center;
+	height: 50px;
+	line-height: 30px;
+	font-size: 24px;
+	background: blue;
 	color: white;
+	border-radius: 16px;
+`;
+
+const Moves = styled.p`
+	width: 150px;
+	height: 24px;
+	padding: 5px;
 	font-family: Arial, Helvetica, sans-serif;
+	position: relative;
+	font-size: 24px;
+`;
+
+const Overlay = styled.button`
+	width: 405px;
+	height: 405px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 10;
+	background: #0004;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 `;
 
 export const App = () => {
@@ -46,24 +65,21 @@ export const App = () => {
 			<Header>
 				<Title>The MediaMonk Puzzle Game</Title>
 			</Header>
-			<SubHeader>
-				<p>{`Moves: ${moves}`}</p>
-			</SubHeader>
-			<SubHeader>
-				<Button onClick={undo}> UNDO </Button>
-			</SubHeader>
-			<Board board={board} moveBy={move} />
-
-			{!solved && (
-				<div>
+			<Moves>{`Moves: ${moves}`}</Moves>
+			<Button onClick={undo}> UNDO </Button>
+			<div style={{ display: 'flex', justifyContent: 'center' }}>
+				<Board board={board} moveBy={move}></Board>
+			</div>
+			{solved && (
+				<Overlay>
 					<Button
 						onClick={() => {
-							console.log('Play again...');
+							newGame();
 						}}
 					>
 						PLAY AGAIN
 					</Button>
-				</div>
+				</Overlay>
 			)}
 		</Container>
 	);

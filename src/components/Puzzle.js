@@ -1,8 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { NUM_COLS, NUM_ROWS } from '../constants';
 
-const image = require('../assets/imgs/monks.jpg');
+import image from '../assets/imgs/monks.jpg';
 
 // because the picture size is 500x500
 const imageSize = { height: 500, width: 500 };
@@ -12,13 +11,6 @@ const tileSize = {
 	width: Math.floor(imageSize.width / 3)
 };
 
-const Container = styled.div`
-	position: absolute;
-	background: white;
-	transition: all 0.1s ease-in-out;
-	border-radius: 2;
-`;
-
 export const Puzzle = ({ index, pos, onClick }) => {
 	const top = pos[0] * tileSize.height + 5;
 	const left = pos[1] * tileSize.width + 5;
@@ -26,19 +18,21 @@ export const Puzzle = ({ index, pos, onClick }) => {
 	const bgTop = Math.floor(index / NUM_COLS) * tileSize.height + 5;
 
 	return (
-		<Container
+		<div
 			onClick={onClick}
 			style={{
+				position: 'absolute',
 				top,
 				left,
-				width: tileSize.width,
-				height: tileSize.height,
-				backgroundImage: `url(${image})`,
+				background: 'white',
 				backgroundSize: `${imageSize.width} ${imageSize.height}`,
-				backgroundPositionX: bgLeft,
-				backgroundPositionY: bgTop
-				//backgroundPosition: `-${bgLeft} -${bgTop}`
+				backgroundImage: `url(${image})`,
+				backgroundPosition: `-${bgLeft}px -${bgTop}px`,
+				width: tileSize.width - 5,
+				height: tileSize.height - 5,
+				transition: `all 0.3s ease-in-out`,
+				borderRadius: 2
 			}}
-		></Container>
+		></div>
 	);
 };
