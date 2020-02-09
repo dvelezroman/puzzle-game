@@ -6,8 +6,16 @@ module.exports = {
 			{
 				test: /\.(js|jsx)$/,
 				exclude: /node_modules/,
+				loader: 'babel-loader'
+			},
+			{
+				test: /\.(svg|png|jpg|jpeg|gif)$/,
 				use: {
-					loader: 'babel-loader'
+					loader: 'file-loader',
+					options: {
+						name: '[path][name].[ext]',
+						outputPath: './assets/img/'
+					}
 				}
 			},
 			{
