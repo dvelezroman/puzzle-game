@@ -25,7 +25,6 @@ const Title = styled.p`
 `;
 
 const Button = styled.button`
-	display: block;
 	padding: 10px 20px;
 	text-align: center;
 	height: 50px;
@@ -46,8 +45,8 @@ const Moves = styled.p`
 `;
 
 const Overlay = styled.button`
-	width: 405px;
-	height: 405px;
+	width: 505px;
+	height: 505px;
 	position: absolute;
 	top: 0;
 	left: 0;
@@ -66,21 +65,30 @@ export const App = () => {
 				<Title>The MediaMonk Puzzle Game</Title>
 			</Header>
 			<Moves>{`Moves: ${moves}`}</Moves>
-			<Button onClick={undo}> UNDO </Button>
-			<div style={{ display: 'flex', justifyContent: 'center' }}>
-				<Board board={board} moveBy={move}></Board>
+			<div style={{ flex: 1, flexDirection: 'row' }}>
+				<Button onClick={undo}> UNDO </Button>
+				<Button
+					onClick={() => {
+						newGame();
+					}}
+				>
+					RESET
+				</Button>
 			</div>
-			{solved && (
-				<Overlay>
-					<Button
-						onClick={() => {
-							newGame();
-						}}
-					>
-						PLAY AGAIN
-					</Button>
-				</Overlay>
-			)}
+
+			<div style={{ display: 'flex', justifyContent: 'center' }}>
+				<Board board={board} moveBy={move} solved={solved}>
+					<Overlay>
+						<Button
+							onClick={() => {
+								newGame();
+							}}
+						>
+							PLAY AGAIN
+						</Button>
+					</Overlay>
+				</Board>
+			</div>
 		</Container>
 	);
 };
