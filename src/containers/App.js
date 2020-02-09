@@ -44,6 +44,15 @@ const Moves = styled.p`
 	font-size: 24px;
 `;
 
+const Timer = styled.p`
+	width: 400px;
+	height: 24px;
+	padding: 5px;
+	font-family: Arial, Helvetica, sans-serif;
+	position: relative;
+	font-size: 24px;
+`;
+
 const Overlay = styled.button`
 	width: 505px;
 	height: 505px;
@@ -58,13 +67,14 @@ const Overlay = styled.button`
 `;
 
 export const App = () => {
-	const [board, moves, solved, newGame, undo, move] = useGameState();
+	const [timerState, board, moves, solved, newGame, undo, move] = useGameState();
 	return (
 		<Container>
 			<Header>
 				<Title>The MediaMonk Puzzle Game</Title>
 			</Header>
 			<Moves>{`Moves: ${moves}`}</Moves>
+			<Timer>{`Timer: ${timerState.time} seconds`}</Timer>
 			<div style={{ flex: 1, flexDirection: 'row' }}>
 				<Button onClick={undo}> UNDO </Button>
 				<Button

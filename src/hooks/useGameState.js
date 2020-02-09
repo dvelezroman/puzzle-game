@@ -1,17 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useTimer } from '../hooks/useTimer';
 import { PuzzlesGame } from '../logic/index';
 
 export const useGameState = () => {
+	// to control when first move done
+	const [firstMove, setFirstMove] = useState(false);
+
+	// get instance from useTimer, to handle the timer
+	const [timerState, startTimer, stopTimer, resetTimer] = useTimer();
+
 	// get the current game state from instance
 	const gameState = PuzzlesGame.getInstance();
 
 	// create a react state from the game state instance
 	const [state, setState] = useState(gameState.getGameState());
 
+	useEffect(() => {
+		if (timerState.solved) {
+			stopTimer();
+		}
+	}, [timerState.solved]);
+
 	// start a new game and update the react state
 	const newGame = () => {
+		setFirstMove(false);
 		gameState.startNewGame();
 		setState(gameState.getGameState());
+		resetTimer();
 	};
 
 	// undo the latest move and update the react state
@@ -23,6 +38,10 @@ export const useGameState = () => {
 	// return a function that will move the i-th tile
 	// and update the react state
 	const move = index => () => {
+		if (!firstMove) {
+			setFirstMove(true);
+			startTimer();
+		}
 		gameState.moveTile(index);
 		setState(gameState.getGameState());
 	};
@@ -50,5 +69,5 @@ export const useGameState = () => {
 	// is created
 
 	// expose the state and the update functions for the components
-	return [state.board, state.moves, state.solved, newGame, undo, move];
+	return [timerState, state.board, state.moves, state.solved, newGame, undo, move];
 };
