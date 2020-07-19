@@ -14,7 +14,7 @@
 	"author": "Dario Velez Roman",
 	"license": "ISC",
 	"dependencies": {
-		"lodash": "^4.17.15",
+		"lodash": "^4.17.19",
 		"react": "^16.12.0",
 		"react-dom": "^16.12.0",
 		"react-motion": "^0.5.2",
